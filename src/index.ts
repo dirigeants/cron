@@ -55,14 +55,14 @@ export class Cron {
 		if (cron in predefined) return predefined[cron];
 		const now = new Date();
 		cron = cron.split(' ').map((val, i) => val.replace(wildcardRegex, (match) => {
-			if (match === 'h') return Math.floor(Math.random() * (allowedNum[i][1] + 1));
+			if (match === 'h') return Math.floor(Math.random() * (allowedNum[i][1] + 1)).toString();
 			if (match === '?') {
 				switch (i) {
-					case 0: return now.getUTCMinutes();
-					case 1: return now.getUTCHours();
-					case 2: return now.getUTCDate();
-					case 3: return now.getUTCMonth();
-					case 4: return now.getUTCDay();
+					case 0: return now.getUTCMinutes().toString();
+					case 1: return now.getUTCHours().toString();
+					case 2: return now.getUTCDate().toString();
+					case 3: return now.getUTCMonth().toString();
+					case 4: return now.getUTCDay().toString();
 				}
 			}
 			return match;
