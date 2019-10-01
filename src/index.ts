@@ -93,12 +93,13 @@ export class Cron {
 		}
 
 		// eslint-disable-next-line prefer-const
-		let [, wild, min, max, step] = partRegex.exec(cronPart);
+		const [, wild, minStr, maxStr, step] = partRegex.exec(cronPart);
+		let [min, max] = [parseInt(minStr), parseInt(maxStr)];
 
-		if (wild) [min, max] = allowedNum[id].map(String);
-		else if (!max && !step) return [parseInt(min)];
-		[min, max] = [min, max || String(allowedNum[id][1])].sort((a, b) => a - b)
-		return Cron._range(parseInt(min), parseInt(max), parseInt(step) || 1);
+		if (wild) [min, max] = allowedNum[id];
+		else if (!max && !step) return [min];
+		[min, max] = [min, max || allowedNum[id][1]].sort((a, b) => a - b);
+		return Cron._range(min, max, parseInt(step) || 1);
 	}
 
 	/**
