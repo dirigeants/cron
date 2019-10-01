@@ -95,9 +95,10 @@ export class Cron {
 		// eslint-disable-next-line prefer-const
 		let [, wild, min, max, step] = partRegex.exec(cronPart);
 
-		if (wild) [min, max] = allowedNum[id];
+		if (wild) [min, max] = allowedNum[id].map(String);
 		else if (!max && !step) return [parseInt(min)];
-		return Cron._range(...[parseInt(min), parseInt(max) || allowedNum[id][1]].sort((a, b) => a - b), parseInt(step) || 1);
+		[min, max] = [min, max || String(allowedNum[id][1])].sort((a, b) => a - b)
+		return Cron._range(parseInt(min), parseInt(max), parseInt(step) || 1);
 	}
 
 	/**
@@ -107,7 +108,7 @@ export class Cron {
 	 * @param step The step value
 	 */
 	private static _range(min: number, max: number, step: number): number[] {
-		return new Array(Math.floor((max - min) / step) + 1).fill(0).map((_, i) => min + (i * step));
+		return new Array(Math.floor((max - min) / step) + 1).fill(0).map((_val, i) => min + (i * step));
 	}
 
 }
