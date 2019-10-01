@@ -1,4 +1,4 @@
-import { partRegex, wildcardRegex, allowedNum, predefined, tokens, tokensRegex } from './constants';
+import { DAY, partRegex, wildcardRegex, allowedNum, predefined, tokens, tokensRegex } from './constants';
 
 /**
  * Handles Cron strings and generates dates based on the cron string provided.
@@ -28,7 +28,7 @@ export class Cron {
 	 * @param outset The Date instance to compare with
 	 * @param origin Whether this next call is origin
 	 */
-	public next(outset: Date = new Date(), origin: boolean = true): Date {
+	public next(outset: Date = new Date(), origin = true): Date {
 		if (!this.days.includes(outset.getUTCDate()) || !this.months.includes(outset.getUTCMonth() + 1) || !this.dows.includes(outset.getUTCDay())) {
 			return this.next(new Date(outset.getTime() + DAY), false);
 		}
