@@ -54,7 +54,7 @@ export class Cron {
 	private static _normalize(cron: string): string {
 		if (cron in predefined) return predefined[cron];
 		const now = new Date();
-		cron = cron.split(' ').map((val, i) => val.replace(wildcardRegex, match => {
+		cron = cron.split(' ').map((val, i) => val.replace(wildcardRegex, (match) => {
 			if (match === 'h') return Math.floor(Math.random() * (allowedNum[i][1] + 1));
 			if (match === '?') {
 				switch (i) {
