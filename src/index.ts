@@ -19,8 +19,8 @@ export class Cron {
 	 */
 	public constructor(cron: string) {
 		this.cron = cron.toLowerCase();
-		this.normalized = this.constructor._normalize(this.cron);
-		[this.minutes, this.hours, this.days, this.months, this.dows] = this.constructor._parseString(this.normalized);
+		this.normalized = Cron._normalize(this.cron);
+		[this.minutes, this.hours, this.days, this.months, this.dows] = Cron._parseString(this.normalized);
 	}
 
 	/**
@@ -107,7 +107,7 @@ export class Cron {
 	 * @param step The step value
 	 */
 	private static _range(min: number, max: number, step: number): number[] {
-		return new Array(Math.floor((max - min) / step) + 1).fill(0).map((val, i) => min + (i * step));
+		return new Array(Math.floor((max - min) / step) + 1).fill(0).map((_, i) => min + (i * step));
 	}
 
 }
