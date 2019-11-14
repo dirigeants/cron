@@ -1,7 +1,7 @@
 export const partRegex = /^(?:(\*)|(\d+)(?:-(\d+))?)(?:\/(\d+))?$/;
 export const wildcardRegex = /\bh\b|\B\?\B/g;
 export const allowedNum = [[0, 59], [0, 23], [1, 31], [1, 12], [0, 6]];
-export const predefined = {
+export const predefined: Record<string, string> = {
 	'@annually': '0 0 1 1 *',
 	'@yearly': '0 0 1 1 *',
 	'@monthly': '0 0 1 * *',
@@ -9,7 +9,7 @@ export const predefined = {
 	'@daily': '0 0 * * *',
 	'@hourly': '0 * * * *'
 };
-export const tokens = {
+export const tokens: Record<string, number> = {
 	jan: 1,
 	feb: 2,
 	mar: 3,

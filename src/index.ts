@@ -67,7 +67,7 @@ export class Cron {
 			}
 			return match;
 		})).join(' ');
-		return cron.replace(tokensRegex, match => tokens[match]);
+		return cron.replace(tokensRegex, match => String(tokens[match]));
 	}
 
 	/**
@@ -93,7 +93,7 @@ export class Cron {
 		}
 
 		// eslint-disable-next-line prefer-const
-		const [, wild, minStr, maxStr, step] = partRegex.exec(cronPart);
+		const [, wild, minStr, maxStr, step] = partRegex.exec(cronPart) as RegExpExecArray;
 		let [min, max] = [parseInt(minStr), parseInt(maxStr)];
 
 		if (wild) [min, max] = allowedNum[id];
