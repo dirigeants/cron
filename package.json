@@ -33,7 +33,6 @@
     "url": "https://github.com/dirigeants/cron"
   },
   "ava": {
-    "compileEnhancements": false,
     "extensions": [
       "ts"
     ],
