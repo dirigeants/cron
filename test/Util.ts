@@ -213,4 +213,9 @@ ava('this instant', (test): void => {
 	test.deepEqual(specimine.dows, [dow]);
 });
 
+
+ava('bad cron', (test): void => {
+	test.throws(() => new Cron('? ?'), { message: 'Invalid Cron Provided' });
+});
+
 /* eslint-enable max-len */
