@@ -199,7 +199,7 @@ ava('every friday in july,august at midnight', (test): void => {
 });
 
 ava('this instant', (test): void => {
-	test.plan(7);
+	test.plan(6);
 
 	const now = new Date();
 	const [min, hour, day, month, dow] = [now.getUTCMinutes(), now.getUTCHours(), now.getUTCDate(), now.getUTCMonth(), now.getUTCDay()];
@@ -211,7 +211,6 @@ ava('this instant', (test): void => {
 	test.deepEqual(specimine.days, [day]);
 	test.deepEqual(specimine.months, [month]);
 	test.deepEqual(specimine.dows, [dow]);
-	test.deepEqual(specimine.next(now), now);
 });
 
 /* eslint-enable max-len */
