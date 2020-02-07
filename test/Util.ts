@@ -185,8 +185,21 @@ ava('every friday in july at midnight', (test): void => {
 	test.deepEqual(specimine.dows, [5]);
 });
 
-ava('this instant', (test): void => {
+ava('every friday in july,august at midnight', (test): void => {
 	test.plan(6);
+
+	const specimine = new Cron('0 0 * jul,aug fri');
+
+	test.is(specimine.normalized, '0 0 * 7,8 5');
+	test.deepEqual(specimine.minutes, [0]);
+	test.deepEqual(specimine.hours, [0]);
+	test.deepEqual(specimine.days, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]);
+	test.deepEqual(specimine.months, [7, 8]);
+	test.deepEqual(specimine.dows, [5]);
+});
+
+ava('this instant', (test): void => {
+	test.plan(7);
 
 	const now = new Date();
 	const [min, hour, day, month, dow] = [now.getUTCMinutes(), now.getUTCHours(), now.getUTCDate(), now.getUTCMonth(), now.getUTCDay()];
@@ -198,6 +211,7 @@ ava('this instant', (test): void => {
 	test.deepEqual(specimine.days, [day]);
 	test.deepEqual(specimine.months, [month]);
 	test.deepEqual(specimine.dows, [dow]);
+	test.deepEqual(specimine.next(now), now);
 });
 
 /* eslint-enable max-len */
