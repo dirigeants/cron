@@ -55,7 +55,9 @@ export class Cron {
 		if (cron in predefined) return predefined[cron];
 		const now = new Date();
 		cron = cron.split(' ').map((val, i) => val.replace(wildcardRegex, (match) => {
-			if (match === 'h') return Math.floor(Math.random() * (allowedNum[i][1] + 1)).toString();
+			if (match === 'h') return (Math.floor(Math.random() * allowedNum[i][1]) + allowedNum[i][0]).toString();
+
+			/* istanbul ignore else: unreachable code. */
 			if (match === '?') {
 				switch (i) {
 					case 0: return now.getUTCMinutes().toString();
@@ -65,6 +67,8 @@ export class Cron {
 					case 4: return now.getUTCDay().toString();
 				}
 			}
+
+			/* istanbul ignore next: unreachable code. */
 			return match;
 		})).join(' ');
 		return cron.replace(tokensRegex, match => String(tokens[match]));
@@ -96,9 +100,21 @@ export class Cron {
 		const [, wild, minStr, maxStr, step] = partRegex.exec(cronPart) as RegExpExecArray;
 		let [min, max] = [parseInt(minStr), parseInt(maxStr)];
 
+		// If '*', set min and max as the minimum and maximum allowed numbers:
 		if (wild) [min, max] = allowedNum[id];
+		// Else if a number was given, but not a maximum nor a step, return it
+		// as only allowed value:
 		else if (!max && !step) return [min];
+
+		// Set min and max as the given numbers, defaulting max to the maximum
+		// allowed, so min is never bigger than max:
+		// This makes min and max be, in the following cases (considering minutes):
+		// -> 1-2 | 1..2
+		// -> 2-1 | 1..2
+		// -> 1/7 | 1, 8, 15, 22, 29, 36, 43, 50, 57
 		[min, max] = [min, max || allowedNum[id][1]].sort((a, b) => a - b);
+
+		// Generate a range
 		return Cron._range(min, max, parseInt(step) || 1);
 	}
 
