@@ -1,5 +1,5 @@
 import ava from 'ava';
-import { Cron } from '../dist';
+import { Cron } from '../src';
 
 /* eslint-disable max-len */
 
